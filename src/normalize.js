@@ -48,7 +48,9 @@ const extractFields = async (
         if (!fileNodeID) {
           try {
             // full media url
-            const source_url = apiURL + field.url
+            const source_url = `${field.url.startsWith('http') ? '' : apiURL}${
+              field.url
+            }`
             const fileNode = await createRemoteFileNode({
               url: source_url,
               store,
