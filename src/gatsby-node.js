@@ -11,6 +11,7 @@ exports.sourceNodes = async (
     contentTypes = [],
     loginData = {},
     queryLimit = 100,
+    filter = () => true
   }
 ) => {
   const { createNode, touchNode } = boundActionCreators
@@ -57,7 +58,10 @@ exports.sourceNodes = async (
   let entities = await Promise.all(promises)
 
   entities = await normalize.downloadMediaFiles({
-    entities,
+    entities: contentTypes.map((contentType, i) => ({
+      entities: entities[i],
+      contentType
+    })),
     apiURL,
     store,
     cache,
@@ -65,10 +69,11 @@ exports.sourceNodes = async (
     createNodeId,
     touchNode,
     jwtToken,
+    filter
   })
 
   contentTypes.forEach((contentType, i) => {
-    const items = entities[i]
+    const items = entities[i].entities
     items.forEach((item, i) => {
       const node = Node(capitalize(contentType), item)
       createNode(node)
