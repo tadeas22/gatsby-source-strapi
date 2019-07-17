@@ -11,7 +11,7 @@ exports.sourceNodes = async (
     contentTypes = [],
     loginData = {},
     queryLimit = 100,
-    filter = () => true
+    filter = () => true,
   }
 ) => {
   const { createNode, touchNode } = boundActionCreators
@@ -32,6 +32,7 @@ exports.sourceNodes = async (
 
     // Make API request.
     try {
+      console.log('loginEndpoint, loginData', loginEndpoint, loginData)
       const loginResponse = await axios.post(loginEndpoint, loginData)
 
       if (loginResponse.hasOwnProperty('data')) {
@@ -60,7 +61,7 @@ exports.sourceNodes = async (
   entities = await normalize.downloadMediaFiles({
     entities: contentTypes.map((contentType, i) => ({
       entities: entities[i],
-      contentType
+      contentType,
     })),
     apiURL,
     store,
@@ -69,7 +70,7 @@ exports.sourceNodes = async (
     createNodeId,
     touchNode,
     jwtToken,
-    filter
+    filter,
   })
 
   contentTypes.forEach((contentType, i) => {

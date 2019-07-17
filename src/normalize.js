@@ -12,7 +12,9 @@ const extractFields = async (
   contentType,
   filter
 ) => {
-  for (const key of Object.keys(item).filter(key => filter(contentType, key, item))) {
+  for (const key of Object.keys(item).filter(key =>
+    filter(contentType, key, item)
+  )) {
     const field = item[key]
     if (Array.isArray(field)) {
       // add recursion to fetch nested strapi references
@@ -50,7 +52,7 @@ const extractFields = async (
 
         // If we don't have cached data, download the file
         if (!fileNodeID) {
-          console.log("Stahuje co bz nemel v gatsbz-source-stragpi")
+          console.log('Stahuje co bz nemel v gatsbz-source-stragpi')
           try {
             // full media url
             const source_url = `${field.url.startsWith('http') ? '' : apiURL}${
@@ -95,8 +97,9 @@ exports.downloadMediaFiles = async ({
   createNodeId,
   touchNode,
   jwtToken: auth,
-  filter
-}) => Promise.all(
+  filter,
+}) =>
+  Promise.all(
     entities.map(async entity => {
       for (let item of entity.entities) {
         // loop item over fields

@@ -2,11 +2,11 @@ import axios from 'axios'
 import { isObject, startsWith, forEach } from 'lodash'
 import pluralize from 'pluralize'
 
-const TIME_PREFIX = 'Fetch Strapi data';
+const TIME_PREFIX = 'Fetch Strapi data'
 
 module.exports = async ({ apiURL, contentType, jwtToken, queryLimit }) => {
-  const contentTypePlural = pluralize(contentType);
-  const timeLabel = `${TIME_PREFIX}: ${contentTypePlural}`;
+  const contentTypePlural = pluralize(contentType)
+  const timeLabel = `${TIME_PREFIX}: ${contentTypePlural}`
 
   console.time(timeLabel)
 
